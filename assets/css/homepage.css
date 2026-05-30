@@ -427,8 +427,7 @@
 
 /* --- 7. BÜLTEN ABONELİĞİ --- */
 .newsletter-section {
-    background: linear-gradient(135deg, #0f2540 0%, var(--color-primary) 100%);
-    color: var(--color-white);
+    background: var(--color-white);
 }
 .newsletter-inner {
     max-width: 600px;
@@ -437,8 +436,8 @@
 }
 .newsletter-section .section-header { margin-bottom: var(--space-8); }
 .newsletter-section .section-header__label { color: var(--color-secondary); }
-.newsletter-section .section-header__title { color: var(--color-white); }
-.newsletter-section .section-header__desc { color: rgba(255,255,255,0.7); margin: 0 auto; }
+.newsletter-section .section-header__title { color: var(--color-primary); }
+.newsletter-section .section-header__desc { color: #666; margin: 0 auto; }
 
 .newsletter-form {
     display: flex;
@@ -449,21 +448,21 @@
     flex: 1;
     padding: var(--space-3) var(--space-5);
     border-radius: var(--radius-sm);
-    border: 2px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.1);
-    color: var(--color-white);
+    border: 2px solid var(--color-border);
+    background: var(--color-white);
+    color: var(--color-neutral-dark);
     font-family: var(--font-ui);
     font-size: var(--text-sm);
     transition: border-color var(--transition);
     outline: none;
 }
-.newsletter-form__input::placeholder { color: rgba(255,255,255,0.5); }
+.newsletter-form__input::placeholder { color: #aaa; }
 .newsletter-form__input:focus { border-color: var(--color-secondary); }
 
 .newsletter-note {
     font-family: var(--font-ui);
     font-size: var(--text-xs);
-    color: rgba(255,255,255,0.5);
+    color: #999;
     margin-top: var(--space-4);
 }
 

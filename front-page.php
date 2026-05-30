@@ -98,18 +98,53 @@
         </div>
         <?php
         $konu_terms = get_terms(['taxonomy' => 'konu', 'number' => 8, 'hide_empty' => false]);
+        /*
+         * Konu slug'ına göre ikon eşlemesi.
+         * Yeni konu eklendiğinde buraya slug => SVG-path çifti ekleyin.
+         * Eşleşme bulunamazsa fallback ikon (belge ikonu) gösterilir.
+         */
         $topic_icons = [
-            'eğitim'   => 'M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.27L4.28 11.5 12 7.73l7.72 3.77L12 15.27z',
-            'kültür'   => 'M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9-4.03-9-9-9zm0 16c-3.86 0-7-3.14-7-7s3.14-7 7-7 7 3.14 7 7-3.14 7-7 7z',
-            'demokrasi'=> 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z',
+            /* Eğitim */
+            'egitim'    => 'M12 3 1 9l11 6 9-4.91V17h2V9L12 3zm0 12.27L4.28 11.5 12 7.73l7.72 3.77L12 15.27zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z',
+            /* Kültür */
+            'kultur'    => 'M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z',
+            /* Demokrasi */
+            'demokrasi' => 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z',
+            /* Çevre */
+            'cevre'     => 'M17 8C8 10 5.9 16.17 3.82 21c-.19.45.39.86.74.5C6.05 19.96 8.5 19 12 19c5 0 9-4 9-9 0-.84-.09-1.66-.25-2.44A5.98 5.98 0 0017 8z',
+            /* Ekonomi */
+            'ekonomi'   => 'M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z',
+            /* Dijital */
+            'dijital'   => 'M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zm-8-4c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z',
+            /* Toplumsal Uzlaşı */
+            'toplumsal-uzlasi' => 'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',
+            /* İnanç */
+            'inanc'     => 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z M10.5 6.5c0 .83-.67 1.5-1.5 1.5S7.5 7.33 7.5 6.5 8.17 5 9 5s1.5.67 1.5 1.5zm5 0c0 .83-.67 1.5-1.5 1.5s-1.5-.67-1.5-1.5S13.17 5 14 5s1.5.67 1.5 1.5z M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z',
+            /* Haberler */
+            'haberler'  => 'M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z',
+            /* Etkinlikler */
+            'etkinlikler' => 'M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z',
+            /* Ziyaretler */
+            'ziyaretlerimiz' => 'M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z',
+            /* Hukuk */
+            'hukuk'     => 'M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 4l5 2.18V11c0 3.5-2.33 6.79-5 7.93-2.67-1.14-5-4.43-5-7.93V7.18L12 5z',
+            /* Sağlık */
+            'saglik'    => 'M10.5 13H8v-3h2.5V7.5h3V10H16v3h-2.5v2.5h-3V13zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z',
+            /* Tarih */
+            'tarih'     => 'M13 2.05v2.02c3.95.49 7 3.85 7 7.93s-3.05 7.44-7 7.93v2.02c5.05-.5 9-4.76 9-9.95S18.05 2.55 13 2.05zM11 2.05C5.95 2.55 2 6.81 2 12s3.95 9.45 9 9.95v-2.02C7.05 19.44 4 16.08 4 12s3.05-7.44 7-7.93V2.05zM12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm.5 9H11v-5.5l4.5 2.7-.75 1.23L12.5 12V15z',
         ];
+        /* Fallback: konuya ait slug eşleşmezse gösterilecek ikon */
+        $icon_fallback = 'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z';
         if (!empty($konu_terms) && !is_wp_error($konu_terms)) : ?>
             <div class="topics-grid">
-                <?php foreach ($konu_terms as $term) : ?>
+                <?php foreach ($konu_terms as $term) :
+                    $slug      = sanitize_title($term->slug);
+                    $icon_path = isset($topic_icons[$slug]) ? $topic_icons[$slug] : $icon_fallback;
+                ?>
                     <a href="<?php echo esc_url(get_term_link($term)); ?>" class="topic-card">
                         <div class="topic-card__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23-.693L5 14.5m14.8.8l1.402 1.402c1 1-.26 2.28-1.7 1.8l-1.29-.43"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="<?php echo esc_attr($icon_path); ?>"/>
                             </svg>
                         </div>
                         <span class="topic-card__name"><?php echo esc_html($term->name); ?></span>
@@ -154,53 +189,6 @@
                 <?php endwhile; wp_reset_postdata(); ?>
             </div>
         <?php endif; ?>
-    </div>
-</section>
-
-<!-- 5. HAKKIMIZDA ÖZETİ -->
-<section class="section about-section" aria-labelledby="about-title">
-    <div class="container">
-        <div class="about-inner">
-            <div>
-                <div class="section-header">
-                    <span class="section-header__label"><?php esc_html_e('Kurumsal', 'utkvakfi'); ?></span>
-                    <h2 class="section-header__title" id="about-title"><?php esc_html_e('Biz Kimiz?', 'utkvakfi'); ?></h2>
-                    <hr class="divider">
-                    <p class="section-header__desc">
-                        <?php echo esc_html(get_theme_mod('about_desc', __('UTK Vakfı, 2014 yılından bu yana Türkiye\'de demokratik uzlaşı kültürünü güçlendirmek, toplumsal diyalogu desteklemek ve politika önerileri üretmek amacıyla çalışmaktadır.', 'utkvakfi'))); ?>
-                    </p>
-                </div>
-                <div class="about-stats">
-                    <?php
-                    $about_stats = [
-                        [get_theme_mod('stat_years',  '10+'), __('Yıl', 'utkvakfi')],
-                        [get_theme_mod('stat_pubs',  '200+'), __('Yayın', 'utkvakfi')],
-                        [get_theme_mod('stat_events', '50+'), __('Etkinlik', 'utkvakfi')],
-                        [get_theme_mod('stat_experts', '30+'), __('Uzman', 'utkvakfi')],
-                    ];
-                    foreach ($about_stats as $stat) : ?>
-                        <div class="about-stat">
-                            <span class="about-stat__num"><?php echo esc_html($stat[0]); ?></span>
-                            <span class="about-stat__label"><?php echo esc_html($stat[1]); ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-                <div style="margin-top: var(--space-8);">
-                    <a href="<?php echo esc_url(home_url('/hakkimizda/')); ?>" class="btn btn--accent">
-                        <?php esc_html_e('Daha Fazla Bilgi', 'utkvakfi'); ?>
-                    </a>
-                </div>
-            </div>
-            <div class="about-visual">
-                <?php
-                $about_img = get_theme_mod('about_image');
-                if ($about_img) :
-                    echo wp_get_attachment_image($about_img, 'utkvakfi-card', false, ['alt' => '']);
-                else : ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/about-placeholder.jpg" alt="" loading="lazy">
-                <?php endif; ?>
-            </div>
-        </div>
     </div>
 </section>
 
