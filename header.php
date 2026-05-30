@@ -50,12 +50,6 @@
             </nav>
 
             <div class="header-actions">
-                <div class="lang-switcher" role="navigation" aria-label="<?php esc_attr_e('Dil seçimi', 'utkvakfi'); ?>">
-                    <a href="<?php echo esc_url(home_url('/')); ?>" class="active" hreflang="tr" aria-current="true">TR</a>
-                    <span aria-hidden="true">|</span>
-                    <a href="<?php echo esc_url(home_url('/en/')); ?>" hreflang="en">EN</a>
-                </div>
-
                 <button class="header-search-btn" aria-label="<?php esc_attr_e('Arama', 'utkvakfi'); ?>" aria-controls="search-overlay" aria-expanded="false">
                     <?php echo utkvakfi_get_svg('search'); // phpcs:ignore WordPress.Security.EscapeOutput ?>
                 </button>

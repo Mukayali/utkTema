@@ -57,6 +57,7 @@
                             </div>
                         </div>
                     </article>
+                    <div class="featured-side">
                 <?php else : ?>
                     <article class="featured-card-sm" aria-labelledby="fsm-title-<?php the_ID(); ?>">
                         <span class="featured-card-sm__type">
@@ -82,7 +83,8 @@
                     </a>
                 </div>
             <?php endif; ?>
-        </div>
+            </div><!-- .featured-side -->
+        </div><!-- .featured-grid -->
         <?php endif; ?>
     </div>
 </section>
