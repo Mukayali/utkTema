@@ -10,9 +10,10 @@
     --color-border:      #D9D4CB;
 
     /* Tipografi */
-    --font-heading: 'Playfair Display', 'Libre Baskerville', Georgia, serif;
-    --font-body:    'Source Serif Pro', 'Lora', Georgia, serif;
-    --font-ui:      'Inter', 'Nunito Sans', system-ui, sans-serif;
+    --font-system:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    --font-heading: var(--font-system);
+    --font-body:    var(--font-system);
+    --font-ui:      var(--font-system);
 
     /* Font Boyutları */
     --text-xs:   0.75rem;
