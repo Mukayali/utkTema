@@ -1,6 +1,17 @@
 /* ===== ANA SAYFA BÖLÜMLERİ ===== */
 
-/* --- 1. HERO --- */
+/* --- 1. HERO – Smart Slider sarmalayıcı --- */
+.hero-slider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0; /* slider altında boşluk kalmasın */
+}
+.hero-slider .n2-ss-slider-wrapper,
+.hero-slider .n2-ss-slider {
+    width: 100% !important;
+}
+
+/* --- Eski statik hero (artık kullanılmıyor, silinene kadar sakla) --- */
 .hero {
     background: linear-gradient(135deg, var(--color-primary) 0%, #0d2338 100%);
     color: var(--color-white);

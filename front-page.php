@@ -1,52 +1,8 @@
 <?php get_header(); ?>
 
-<!-- 1. HERO -->
-<section class="hero" aria-labelledby="hero-title">
-    <div class="container">
-        <div class="hero__inner">
-            <div class="hero__content">
-                <span class="hero__label"><?php esc_html_e('UTK Vakfı', 'utkvakfi'); ?></span>
-                <h1 class="hero__title" id="hero-title">
-                    <?php echo wp_kses_post(get_theme_mod('hero_title', __('Türkiye\'de <span>Uzlaşı</span> ve Toplumsal Kalkınma', 'utkvakfi'))); ?>
-                </h1>
-                <p class="hero__desc">
-                    <?php echo esc_html(get_theme_mod('hero_desc', __('Bağımsız araştırma ve analiz yoluyla Türkiye\'de demokratik uzlaşı kültürünü ve toplumsal kalkınmayı destekliyoruz.', 'utkvakfi'))); ?>
-                </p>
-                <div class="hero__actions">
-                    <a href="<?php echo esc_url(get_post_type_archive_link('yayin')); ?>" class="btn btn--accent">
-                        <?php esc_html_e('Yayınları İnceleyin', 'utkvakfi'); ?>
-                        <?php echo utkvakfi_get_svg('arrow'); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-                    </a>
-                    <a href="<?php echo esc_url(home_url('/hakkimizda/')); ?>" class="btn btn--secondary" style="border-color:rgba(255,255,255,0.5);color:white;">
-                        <?php esc_html_e('Hakkımızda', 'utkvakfi'); ?>
-                    </a>
-                </div>
-                <div class="hero__stats">
-                    <?php
-                    $stats = [
-                        [get_theme_mod('stat_years',  '10+'), __('Yıldır Faaliyette', 'utkvakfi')],
-                        [get_theme_mod('stat_pubs',  '200+'), __('Yayın', 'utkvakfi')],
-                        [get_theme_mod('stat_events', '50+'), __('Etkinlik', 'utkvakfi')],
-                    ];
-                    foreach ($stats as $stat) : ?>
-                        <div class="hero__stat">
-                            <span class="hero__stat-num"><?php echo esc_html($stat[0]); ?></span>
-                            <span class="hero__stat-label"><?php echo esc_html($stat[1]); ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            </div>
-            <div class="hero__visual" aria-hidden="true">
-                <?php
-                $hero_img = get_theme_mod('hero_image');
-                if ($hero_img) :
-                    echo wp_get_attachment_image($hero_img, 'utkvakfi-hero', false, ['alt' => '']);
-                else : ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/images/hero-placeholder.jpg" alt="" loading="eager">
-                <?php endif; ?>
-            </div>
-        </div>
-    </div>
+<!-- 1. HERO – Smart Slider 3 -->
+<section class="hero-slider" aria-label="<?php esc_attr_e('Ana Slider', 'utkvakfi'); ?>">
+    <?php echo do_shortcode('[smartslider3 slider="2"]'); ?>
 </section>
 
 <!-- 2. ÖNE ÇIKAN İÇERİK -->
