@@ -128,9 +128,12 @@ function utkvakfi_yayin_column_content(string $column, int $post_id): void {
 }
 add_action('manage_yayin_posts_custom_column', 'utkvakfi_yayin_column_content', 10, 2);
 
-/* Yayınlar arşivinde standart 'post' tipini de dahil et */
+/* Yayınlar arşivinde standart 'post' tipini de dahil et; tüm arşivlerde 9'ar sayfalama */
 function utkvakfi_archive_query( WP_Query $query ): void {
     if ( is_admin() || ! $query->is_main_query() ) return;
+    if ( $query->is_archive() || $query->is_search() || $query->is_home() ) {
+        $query->set( 'posts_per_page', 9 );
+    }
     if ( $query->is_post_type_archive( 'yayin' ) ) {
         $query->set( 'post_type', [ 'yayin', 'post' ] );
     }

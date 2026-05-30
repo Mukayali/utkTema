@@ -68,10 +68,18 @@
     white-space: nowrap;
 }
 .main-nav__link:hover,
-.main-nav__link:focus,
-.main-nav__item.current-menu-item > .main-nav__link {
+.main-nav__link:focus {
     background: rgba(255,255,255,0.12);
     color: var(--color-white);
+}
+
+/* Seçili / aktif menü öğesi */
+.main-nav__item.current-menu-item > .main-nav__link,
+.main-nav__item.current-menu-ancestor > .main-nav__link,
+.main-nav__item.current-menu-parent > .main-nav__link {
+    background: var(--color-white);
+    color: var(--color-primary);
+    font-weight: 600;
 }
 .main-nav__link:focus-visible {
     outline: 2px solid var(--color-secondary);
@@ -102,7 +110,7 @@
     visibility: visible;
     transform: translateY(0);
 }
-.main-nav__dropdown a {
+.main-nav__dropdown-link {
     display: block;
     padding: var(--space-2) var(--space-4);
     font-family: var(--font-ui);
@@ -112,7 +120,16 @@
     border-radius: var(--radius-sm);
     transition: background var(--transition);
 }
-.main-nav__dropdown a:hover { background: var(--color-accent); color: var(--color-primary); }
+.main-nav__dropdown-link:hover,
+.main-nav__dropdown-link:focus {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+/* Dropdown içindeki aktif sayfa */
+.current-menu-item > .main-nav__dropdown-link {
+    color: var(--color-primary);
+    font-weight: 600;
+}
 
 /* Dropdown arrow indicator */
 .main-nav__link[aria-haspopup="true"]::after {
@@ -255,8 +272,8 @@
         border-radius: var(--radius-sm);
         margin-top: var(--space-1);
     }
-    .main-nav.is-open .main-nav__dropdown a { color: rgba(255,255,255,0.8); }
-    .main-nav.is-open .main-nav__dropdown a:hover { background: rgba(255,255,255,0.1); color: white; }
+    .main-nav.is-open .main-nav__dropdown-link { color: rgba(255,255,255,0.8); background: transparent; }
+    .main-nav.is-open .main-nav__dropdown-link:hover { background: rgba(255,255,255,0.1); color: white; }
 }
 
 @media (max-width: 480px) {

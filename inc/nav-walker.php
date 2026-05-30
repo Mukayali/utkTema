@@ -23,7 +23,7 @@ class UTK_Nav_Walker extends Walker_Nav_Menu {
 
         $atts          = [];
         $atts['href']  = ! empty( $item->url ) ? $item->url : '#';
-        $atts['class'] = 'main-nav__link';
+        $atts['class'] = $depth === 0 ? 'main-nav__link' : 'main-nav__dropdown-link';
 
         if ( $item->attr_title ) $atts['title']        = $item->attr_title;
         if ( $item->target )     $atts['target']       = $item->target;
