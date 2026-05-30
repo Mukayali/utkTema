@@ -4,14 +4,17 @@ defined('ABSPATH') || exit;
 function utkvakfi_register_taxonomies(): void {
     register_taxonomy('konu', ['post', 'yayin', 'etkinlik', 'proje'], [
         'labels' => [
-            'name'          => 'Konular',
-            'singular_name' => 'Konu',
-            'search_items'  => 'Konu Ara',
-            'all_items'     => 'Tüm Konular',
-            'edit_item'     => 'Konuyu Düzenle',
-            'add_new_item'  => 'Yeni Konu Ekle',
+            'name'              => 'Konular',
+            'singular_name'     => 'Konu',
+            'search_items'      => 'Konu Ara',
+            'all_items'         => 'Tüm Konular',
+            'edit_item'         => 'Konuyu Düzenle',
+            'add_new_item'      => 'Yeni Konu Ekle',
+            'menu_name'         => 'Konular',
         ],
         'public'            => true,
+        'show_ui'           => true,
+        'show_in_menu'      => true,
         'show_in_rest'      => true,
         'hierarchical'      => true,
         'show_admin_column' => true,
