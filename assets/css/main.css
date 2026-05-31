@@ -1,239 +1,283 @@
+/*
+ * =============================================================================
+ * DOSYA: assets/css/main.css
+ * =============================================================================
+ * Bu dosya tüm CSS dosyalarının "ana kapısı" gibidir.
+ * Sayfaya yalnızca bu tek dosya yüklenir. Diğer tüm CSS dosyaları
+ * buradan "@import" ile içeri alınır.
+ *
+ * Neden böyle? Tek bir büyük dosya yerine küçük parçalara bölmek,
+ * dosyaları bulmayı ve düzenlemeyi kolaylaştırır.
+ * Tıpkı bir ansiklopedinin tek kitap değil, bölümlere ayrılmış ciltler
+ * halinde olması gibi.
+ *
+ * Yükleme sırası önemlidir: değişkenler en önce, çünkü diğerleri
+ * var(--color-primary) gibi ifadelerde bu değişkenlere başvurur.
+ * =============================================================================
+ */
+
+/* 1. Değişkenler: Renkler, boyutlar, boşluklar (hepsinin temeli) */
 @import 'variables.css';
+
+/* 2. Temel sıfırlama ve evrensel stiller (butonlar, kart grid, tipografi) */
 @import 'base.css';
+
+/* 3. Site başlığı, navigasyon, hamburger menü, arama overlay */
 @import 'header.css';
+
+/* 4. Ana sayfa bölümleri (hero, öne çıkan, konular, haberler, etkinlikler, bülten) */
 @import 'homepage.css';
+
+/* 5. Yazı/yayın detay sayfası (makale içeriği, sidebar, yazar widget) */
 @import 'single.css';
+
+/* 6. Site alt bölümü (footer: logo, linkler, iletişim, alt çubuk) */
 @import 'footer.css';
 
-/* ===== ARCHIVE / LİSTE SAYFALARI ===== */
+
+/* =============================================================================
+ * ARŞİV / LİSTE SAYFALARI
+ * =============================================================================
+ * Yayınlar, etkinlikler, konular gibi listelemelerin üst başlık alanı.
+ * URL örneği: site.com/yayinlar/ ya da site.com/konu/egitim/
+ */
+
+/* Arşiv sayfasının üst koyu mavi başlık alanı */
 .archive-header {
-    background: var(--color-primary);
+    background: var(--color-primary);   /* Koyu lacivert arka plan */
     color: var(--color-white);
     padding-block: var(--space-12);
 }
+/* "ARŞİV" gibi küçük altın üst etiket */
 .archive-header__label {
     font-family: var(--font-ui);
     font-size: var(--text-xs);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--color-secondary);
+    color: var(--color-secondary);     /* Altın rengi */
     display: block;
     margin-bottom: var(--space-3);
 }
 .archive-header__title { color: var(--color-white); margin-bottom: var(--space-4); }
-.archive-header__desc { color: rgba(255,255,255,0.7); font-size: var(--text-lg); }
+.archive-header__desc  { color: rgba(255,255,255,0.7); font-size: var(--text-lg); }
+
+
+/* =============================================================================
+ * ARŞİV FİLTRE ÇUBUĞU
+ * =============================================================================
+ * Liste sayfalarında türe göre filtreleme butonları.
+ * Sayfa kaydırılırken "yapışık" (sticky) kalır, her zaman görünür.
+ *
+ * Örnek: [Tümü] [Makale] [Rapor] [Analiz]
+ */
 
 .archive-filters {
     background: var(--color-white);
     padding-block: var(--space-6);
     border-bottom: 1px solid var(--color-border);
-    position: sticky;
-    top: 72px;
+    position: sticky;    /* Kaydırırken ekranın üstünde kalsın */
+    top: 72px;           /* Header yüksekliğinin hemen altından başlasın */
     z-index: 10;
 }
+/* Filtre çubuğunun iç düzeni */
 .archive-filters__inner {
     display: flex;
     align-items: center;
     gap: var(--space-3);
     flex-wrap: wrap;
 }
+/* "Tür:" etiketi */
 .archive-filters__label {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-neutral-dark);
-    flex-shrink: 0;
+    font-family: var(--font-ui); font-size: var(--text-sm);
+    font-weight: 600; color: var(--color-neutral-dark); flex-shrink: 0;
 }
+
+/* Filtre butonları: yuvarlak, küçük metin */
 .filter-btn {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    font-weight: 500;
+    font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 500;
     padding: var(--space-2) var(--space-4);
-    border-radius: 999px;
+    border-radius: 999px;               /* Tam yuvarlak */
     border: 1px solid var(--color-border);
-    background: transparent;
-    color: #666;
-    cursor: pointer;
-    text-decoration: none;
+    background: transparent; color: #666;
+    cursor: pointer; text-decoration: none;
     transition: all var(--transition);
 }
+/* Aktif ya da üzerine gelince lacivert */
 .filter-btn:hover, .filter-btn.active {
     background: var(--color-primary);
     border-color: var(--color-primary);
     color: var(--color-white);
 }
 
+
+/* =============================================================================
+ * ARŞİV İÇERİK DÜZENİ
+ * =============================================================================
+ * Kart listesi (sol) + sidebar (sağ) iki sütunlu düzen.
+ */
+
 .archive-content {
     padding-block: var(--space-12);
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 300px; /* Kart alanı geniş, sidebar dar */
     gap: var(--space-12);
 }
+/* Tablette ve mobilde tek sütuna geç */
 @media (max-width: 1024px) { .archive-content { grid-template-columns: 1fr; } }
 
+
+/* =============================================================================
+ * SAYFALAMA (PAGİNATION)
+ * =============================================================================
+ * Liste sayfalarının altındaki sayfa numaraları.
+ * Örnek: [1] [2] [3] ... [Son]
+ */
+
 .pagination {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    padding-top: var(--space-12);
+    display: flex; align-items: center; justify-content: center;
+    gap: var(--space-2); padding-top: var(--space-12);
 }
+/* Her sayfa numarası */
 .pagination a, .pagination span {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 500;
+    font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 500;
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
-    text-decoration: none;
-    color: var(--color-neutral-dark);
+    text-decoration: none; color: var(--color-neutral-dark);
     transition: all var(--transition);
-    min-width: 40px;
-    text-align: center;
+    min-width: 40px; text-align: center;
 }
 .pagination a:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+/* Aktif sayfa numarası: lacivert dolu */
 .pagination .current { background: var(--color-primary); color: white; border-color: var(--color-primary); }
 
-/* ===== UZMAN PROFİL SAYFASI ===== */
+
+/* =============================================================================
+ * UZMAN PROFİL SAYFASI BAŞLIĞI
+ * =============================================================================
+ * Bir uzman/yazar profil sayfasının üst kısmı.
+ * Büyük profil fotoğrafı, isim, unvan ve uzmanlık etiketleri.
+ */
+
 .expert-header {
     background: var(--color-primary);
     padding-block: var(--space-12);
 }
-.expert-header__inner {
-    display: flex;
-    gap: var(--space-8);
-    align-items: center;
-}
+/* Fotoğraf + bilgi yan yana */
+.expert-header__inner { display: flex; gap: var(--space-8); align-items: center; }
+/* Yuvarlak büyük profil fotoğrafı */
 .expert-header__img {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid rgba(255,255,255,0.2);
-    flex-shrink: 0;
+    width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+    border: 4px solid rgba(255,255,255,0.2); flex-shrink: 0;
 }
 .expert-header__info {}
-.expert-header__name {
-    font-family: var(--font-heading);
-    font-size: var(--text-3xl);
-    color: var(--color-white);
-    margin-bottom: var(--space-2);
-}
-.expert-header__role {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-4);
-}
-.expert-header__bio { color: rgba(255,255,255,0.75); max-width: 60ch; }
-.expert-header__tags { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4); }
-.expert-header__tags .tag {
-    background: rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.8);
-}
+.expert-header__name  { font-family: var(--font-heading); font-size: var(--text-3xl); color: var(--color-white); margin-bottom: var(--space-2); }
+.expert-header__role  { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 600; color: var(--color-secondary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-4); }
+.expert-header__bio   { color: rgba(255,255,255,0.75); max-width: 60ch; }
+/* Uzmanlık etiketleri satırı */
+.expert-header__tags  { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-4); }
+/* Etiketler şeffaf beyaz arka planlı */
+.expert-header__tags .tag { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8); }
 
+/* Mobilde dikey hizala */
 @media (max-width: 640px) {
     .expert-header__inner { flex-direction: column; text-align: center; }
-    .expert-header__tags { justify-content: center; }
+    .expert-header__tags  { justify-content: center; }
 }
 
-/* ===== ETKİNLİK DETAY ===== */
-.event-detail-header {
-    background: var(--color-primary);
-    padding-block: var(--space-12);
-    color: var(--color-white);
-}
-.event-info-bar {
-    background: var(--color-white);
-    border-bottom: 1px solid var(--color-border);
-    padding-block: var(--space-4);
-}
-.event-info-bar__inner {
-    display: flex;
-    gap: var(--space-8);
-    align-items: center;
-    flex-wrap: wrap;
-}
+
+/* =============================================================================
+ * ETKİNLİK DETAY SAYFASI
+ * =============================================================================
+ * Bir etkinlik sayfasının üst bilgi çubuğu (tarih, yer, saat).
+ */
+
+/* Etkinlik sayfasının lacivert başlık alanı */
+.event-detail-header { background: var(--color-primary); padding-block: var(--space-12); color: var(--color-white); }
+
+/* Etkinlik özet bilgi çubuğu: tarih, yer, tür ikonlarla */
+.event-info-bar { background: var(--color-white); border-bottom: 1px solid var(--color-border); padding-block: var(--space-4); }
+.event-info-bar__inner { display: flex; gap: var(--space-8); align-items: center; flex-wrap: wrap; }
+/* Tek bir bilgi öğesi (ikon + metin) */
 .event-info-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    color: var(--color-neutral-dark);
+    display: flex; align-items: center; gap: var(--space-2);
+    font-family: var(--font-ui); font-size: var(--text-sm); color: var(--color-neutral-dark);
 }
-.event-info-item svg { width: 16px; height: 16px; color: var(--color-secondary); }
+.event-info-item svg    { width: 16px; height: 16px; color: var(--color-secondary); }
 .event-info-item strong { font-weight: 600; }
 
-/* ===== ARAMA ===== */
+
+/* =============================================================================
+ * ARAMA OVERLAY
+ * =============================================================================
+ * Header'daki büyüteç tıklandığında tüm ekranı kaplayan arama alanı.
+ * Varsayılan gizli; is-open sınıfı gelince görünür olur.
+ */
+
 .search-overlay {
     position: fixed;
-    inset: 0;
-    background: rgba(26,58,92,0.95);
+    inset: 0;                           /* Tüm ekranı kapla */
+    background: rgba(26,58,92,0.95);    /* Yarı saydam lacivert */
     z-index: 1000;
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 15vh;
+    padding-top: 15vh;                  /* Ekranın %15 aşağısından başla */
     opacity: 0;
-    visibility: hidden;
+    visibility: hidden;                 /* Gizli ama DOM'da var */
     transition: all var(--transition);
 }
+/* Açık durum → görünür yap */
 .search-overlay.is-open { opacity: 1; visibility: visible; }
+
 .search-overlay__inner { width: 100%; max-width: 700px; padding-inline: var(--space-6); }
+
+/* "ARAMA" üst etiketi */
 .search-overlay__label {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.5);
-    display: block;
-    margin-bottom: var(--space-4);
+    font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.5); display: block; margin-bottom: var(--space-4);
 }
+
+/* Form: input + kapat butonu yan yana, alt çizgili */
 .search-overlay__form { display: flex; gap: var(--space-3); align-items: center; border-bottom: 2px solid rgba(255,255,255,0.3); }
+
+/* Arama kutusu: şeffaf arka plan, büyük font */
 .search-overlay__input {
-    flex: 1;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-family: var(--font-heading);
-    font-size: 2rem;
-    color: var(--color-white);
-    padding-block: var(--space-4);
+    flex: 1; background: transparent; border: none; outline: none;
+    font-family: var(--font-heading); font-size: 2rem;
+    color: var(--color-white); padding-block: var(--space-4);
 }
 .search-overlay__input::placeholder { color: rgba(255,255,255,0.3); }
+
+/* Kapat (X) butonu */
 .search-overlay__close {
-    background: transparent;
-    border: none;
-    color: rgba(255,255,255,0.6);
-    cursor: pointer;
-    padding: var(--space-2);
-    border-radius: var(--radius-sm);
+    background: transparent; border: none; color: rgba(255,255,255,0.6);
+    cursor: pointer; padding: var(--space-2); border-radius: var(--radius-sm);
     transition: color var(--transition);
 }
 .search-overlay__close:hover { color: white; }
-.search-overlay__close svg { width: 24px; height: 24px; }
+.search-overlay__close svg   { width: 24px; height: 24px; }
 
-/* ===== 404 ===== */
+
+/* =============================================================================
+ * 404 HATA SAYFASI
+ * =============================================================================
+ * Ziyaretçi olmayan bir sayfaya girdiğinde gösterilen "Sayfa Bulunamadı" ekranı.
+ * Büyük "404" sayısı, açıklama ve iki yönlendirme butonu.
+ */
+
 .error-page {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding-block: var(--space-24);
+    min-height: 60vh;           /* Ekranın en az %60'ını kapla */
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding-block: var(--space-24);
 }
+/* Büyük soluk "404" rakamı (dekoratif) */
 .error-page__code {
-    font-family: var(--font-heading);
-    font-size: 8rem;
-    color: var(--color-accent);
-    line-height: 1;
-    margin-bottom: var(--space-4);
+    font-family: var(--font-heading); font-size: 8rem;
+    color: var(--color-accent);     /* Açık renk, görünür ama baskın değil */
+    line-height: 1; margin-bottom: var(--space-4);
 }
 .error-page__title { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
-.error-page__desc { color: #666; margin-bottom: var(--space-8); }
+.error-page__desc  { color: #666; margin-bottom: var(--space-8); }

@@ -1,63 +1,151 @@
+/*
+ * =============================================================================
+ * DOSYA: assets/css/variables.css
+ * =============================================================================
+ * Bu dosya temanın "renk paleti ve ölçek cetveli" gibidir.
+ * Tüm renkleri, yazı boyutlarını, boşlukları ve gölgeleri tek bir yerde
+ * saklar. Başka bir CSS dosyasında renk kullanmak istediğimizde
+ * doğrudan "#1A3A5C" yazmak yerine "var(--color-primary)" kullanırız.
+ *
+ * Faydası: Sitemin ana rengini değiştirmek istersen sadece bu dosyadaki
+ * --color-primary değerini değiştirmen yeterli. Diğer 50 dosyayı
+ * tek tek aramana gerek yok.
+ *
+ * CSS değişkenleri ":root" içinde tanımlanır → tüm sayfada geçerli olur.
+ * =============================================================================
+ */
+
 :root {
-    /* Renk Paleti */
-    --color-primary:     #1A3A5C;
-    --color-secondary:   #C8973A;
-    --color-neutral-light: #F5F3EE;
-    --color-neutral-dark:  #2D2D2D;
-    --color-accent:      #E8F0F7;
-    --color-alert:       #8B1A1A;
-    --color-white:       #FFFFFF;
-    --color-border:      #D9D4CB;
 
-    /* Tipografi */
-    --font-system:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    --font-heading: var(--font-system);
-    --font-body:    var(--font-system);
-    --font-ui:      var(--font-system);
+    /* ==========================================================================
+     * RENK PALETİ
+     * ==========================================================================
+     * UTK Vakfı'nın kurumsal renkleri. Her rengin seçilme nedeni:
+     */
 
-    /* Font Boyutları */
-    --text-xs:   0.75rem;
-    --text-sm:   0.875rem;
-    --text-base: 1.125rem;
-    --text-lg:   1.25rem;
-    --text-xl:   1.5rem;
-    --text-2xl:  2rem;
-    --text-3xl:  2.8rem;
+    --color-primary:       #1A3A5C;  /* Derin lacivert  → güven, otorite, kurumsal kimlik */
+    --color-secondary:     #C8973A;  /* Toprak altın    → Anadolu kültürü, sıcaklık, vurgu */
+    --color-neutral-light: #F5F3EE;  /* Kırık beyaz     → temiz arka plan (saf beyaz değil, göz yormaz) */
+    --color-neutral-dark:  #2D2D2D;  /* Koyu gri        → ana metin rengi (siyah değil, daha yumuşak) */
+    --color-accent:        #E8F0F7;  /* Açık mavi-gri   → kart arka planları, vurgu alanları */
+    --color-alert:         #8B1A1A;  /* Koyu kırmızı    → önemli duyurular, hata mesajları */
+    --color-white:         #FFFFFF;  /* Saf beyaz        → buton metinleri, açık zeminler */
+    --color-border:        #D9D4CB;  /* Bej-gri çizgi   → ayırıcı çizgiler, çerçeveler */
 
-    /* Satır Aralığı */
-    --leading-tight:  1.25;
-    --leading-normal: 1.6;
-    --leading-relaxed: 1.75;
 
-    /* Boşluklar */
-    --space-1:  0.25rem;
-    --space-2:  0.5rem;
-    --space-3:  0.75rem;
-    --space-4:  1rem;
-    --space-6:  1.5rem;
-    --space-8:  2rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-20: 5rem;
-    --space-24: 6rem;
+    /* ==========================================================================
+     * TİPOGRAFİ (YAZI TİPLERİ)
+     * ==========================================================================
+     * Üç farklı yazı tipi rolü vardır. Hepsi aynı sistem font ailesini kullanır.
+     * Sistem fontları = işletim sisteminin kendi fontları → harici font yüklenmez,
+     * sayfa daha hızlı açılır, kullanıcı kendi ekranında alışık olduğu fontla okur.
+     */
 
-    /* Layout */
-    --container-sm:  640px;
-    --container-md:  768px;
-    --container-lg:  1024px;
-    --container-xl:  1280px;
-    --container-2xl: 1440px;
+    /* İşletim sisteminin en iyi sans-serif fontu (macOS: -apple-system = San Francisco,
+       Windows: Segoe UI, Android: Roboto vb.) */
+    --font-system:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
+    --font-heading: var(--font-system);  /* Başlıklar (H1, H2, H3...) için */
+    --font-body:    var(--font-system);  /* Uzun okuma metinleri için */
+    --font-ui:      var(--font-system);  /* Butonlar, navigasyon, etiketler için */
 
-    /* Gölge */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
-    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
 
-    /* Geçiş */
-    --transition: 200ms ease;
+    /* ==========================================================================
+     * YAZI BOYUTLARI
+     * ==========================================================================
+     * rem = "root em" → sayfanın temel yazı boyutuna göre oransal birim.
+     * Temel boyut 16px olduğunda: 1rem = 16px, 2rem = 32px
+     * rem kullanmak, kullanıcı tarayıcı yazı boyutunu artırdığında
+     * sitenin de buna uyum sağlamasını sağlar (erişilebilirlik).
+     */
+
+    --text-xs:   0.75rem;   /* 12px → etiketler, dipnotlar, meta bilgiler */
+    --text-sm:   0.875rem;  /* 14px → yardımcı metinler, buton yazıları */
+    --text-base: 1.125rem;  /* 18px → ana gövde metni (makale içerikleri) */
+    --text-lg:   1.25rem;   /* 20px → vurgulu paragraflar, alıntılar */
+    --text-xl:   1.5rem;    /* 24px → H3 başlıkları */
+    --text-2xl:  2rem;      /* 32px → H2 başlıkları */
+    --text-3xl:  2.8rem;    /* 45px → H1 başlıkları (sayfa başlıkları) */
+
+
+    /* ==========================================================================
+     * SATIR ARALIĞI
+     * ==========================================================================
+     * Satır aralığı = iki satır arasındaki boşluk.
+     * Birim yok (1.6 gibi) → yazı boyutunun o kadar katı kadar boşluk.
+     * Örn: 18px yazı + leading-relaxed(1.75) = 31.5px satır yüksekliği
+     */
+
+    --leading-tight:   1.25;  /* Sıkışık → başlıklar (kısa metinler)     */
+    --leading-normal:  1.6;   /* Normal  → dipnotlar, küçük metinler      */
+    --leading-relaxed: 1.75;  /* Rahat   → gövde metni (uzun okuma için) */
+
+
+    /* ==========================================================================
+     * BOŞLUKLAR (SPACING)
+     * ==========================================================================
+     * Tüm margin ve padding değerleri bu değişkenlerden gelir.
+     * 4px'lik bir temel birimden türetilmiş bir ölçek sistemidir.
+     * Tıpkı bir ızgara üzerinde çalışmak gibi — her şey aynı birime uyar.
+     */
+
+    --space-1:   0.25rem;  /*  4px → ikon-metin arası gibi çok küçük boşluklar */
+    --space-2:   0.5rem;   /*  8px → etiket iç dolgusu                          */
+    --space-3:   0.75rem;  /* 12px → küçük bileşen boşlukları                   */
+    --space-4:   1rem;     /* 16px → standart iç dolgu                           */
+    --space-6:   1.5rem;   /* 24px → kart iç dolgusu                             */
+    --space-8:   2rem;     /* 32px → bölüm içi büyük boşluklar                  */
+    --space-12:  3rem;     /* 48px → bölümler arası boşluk                       */
+    --space-16:  4rem;     /* 64px → büyük bölüm dolgusu                         */
+    --space-20:  5rem;     /* 80px → çok büyük boşluk (hero vb.)                */
+    --space-24:  6rem;     /* 96px → en büyük bölüm dolgusu                     */
+
+
+    /* ==========================================================================
+     * LAYOUT (SAYFA DÜZENİ) GENIŞLIKLERI
+     * ==========================================================================
+     * İçeriklerin ne kadar geniş olabileceği. Çok dar ekranlarda
+     * içerik kenarlardan taşmasın, çok geniş ekranlarda da okunması
+     * zorlaşmasın diye maksimum genişlikler belirlenmiştir.
+     */
+
+    --container-sm:  640px;   /* Küçük içerik kutuları */
+    --container-md:  768px;   /* Orta genişlik         */
+    --container-lg:  1024px;  /* Büyük içerik          */
+    --container-xl:  1280px;  /* Ana sayfa genişliği   */
+    --container-2xl: 1440px;  /* Tam ekran düzeni      */
+
+
+    /* ==========================================================================
+     * KENAR YUVARLAMA (BORDER RADIUS)
+     * ==========================================================================
+     * Köşelerin ne kadar yuvarlak olacağı. 0 = tamamen köşeli, büyük değer = yuvarlak.
+     */
+
+    --radius-sm:  4px;   /* Butonlar, etiketler, küçük kartlar */
+    --radius-md:  8px;   /* Kartlar, görsel çerçeveleri         */
+    --radius-lg: 12px;   /* Büyük panel ve kutu köşeleri        */
+
+
+    /* ==========================================================================
+     * GÖLGELER (BOX SHADOW)
+     * ==========================================================================
+     * Kartlar ve panellerin altındaki gölge. Daha büyük gölge = daha "yukarıda"
+     * duruyor gibi hissettirir (derinlik etkisi).
+     */
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);    /* Hafif gölge → normal kart */
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.10);   /* Orta gölge  → hover durumu */
+    --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);   /* Derin gölge → dropdown, modal */
+
+
+    /* ==========================================================================
+     * GEÇİŞ ANİMASYONU (TRANSITION)
+     * ==========================================================================
+     * Hover, focus gibi durumlarda renk/gölge değişimi ne kadar sürsün?
+     * 200ms = 0.2 saniye → gözle fark edilir ama yavaş hissettirmez.
+     */
+
+    --transition: 200ms ease; /* Tüm animasyonlar 200ms'de tamamlanır */
 }

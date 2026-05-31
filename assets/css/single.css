@@ -1,361 +1,352 @@
-/* ===== YAYIN DETAY SAYFASI ===== */
+/*
+ * =============================================================================
+ * DOSYA: assets/css/single.css
+ * =============================================================================
+ * Bir yazı veya yayın detay sayfasının tüm stilleri burada.
+ * URL örneği: site.com/yayinlar/demokrasi-uzerine-bir-analiz/
+ *
+ * Sayfa düzeni (2 sütunlu grid):
+ *   ┌─────────────────────────────────┬──────────────┐
+ *   │  Breadcrumb (sayfa yolu)        │              │
+ *   │  Konu etiketleri                │   Sidebar    │
+ *   │  Makale başlığı                 │   (Yazar     │
+ *   │  Yazar + tarih + okuma süresi   │    widget,   │
+ *   │  Öne çıkan görsel               │    Konular)  │
+ *   │  Makale içeriği                 │              │
+ *   │  Paylaşım butonları             │              │
+ *   │  İlgili yayınlar                │              │
+ *   └─────────────────────────────────┴──────────────┘
+ *
+ * İçindekiler:
+ *   1.  single-layout     → 2 sütun grid (makale + sidebar)
+ *   2.  article-breadcrumb → "Ana Sayfa > Yayınlar > Başlık" yolu
+ *   3.  article-title      → Makalenin büyük başlığı
+ *   4.  article-meta       → Yazar, tarih, okuma süresi
+ *   5.  article-featured-image → Kapak görseli
+ *   6.  article-content    → Makale gövde metni (h2, h3, blockquote vb.)
+ *   7.  article-download   → PDF indirme kutusu
+ *   8.  article-footnotes  → Dipnotlar bölümü
+ *   9.  article-share      → Sosyal medya paylaşım butonları
+ *   10. related-posts      → İlgili yayınlar kartları
+ *   11. article-sidebar    → Sağ yan panel
+ *   12. sidebar-widget     → Beyaz kart widget çerçevesi
+ *   13. author-widget      → Yazar bilgi kutusu
+ *   14. toc-list           → İçindekiler navigasyonu
+ * =============================================================================
+ */
+
+
+/* =============================================================================
+ * 1. SAYFA DÜZENİ – 2 SÜTUN GRID
+ * =============================================================================
+ * Soldaki geniş sütun = makale, sağdaki dar sütun = sidebar.
+ * Tablette tek sütuna geçer.
+ */
+
 .single-layout {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 320px;  /* Makale geniş, sidebar 320px */
     gap: var(--space-12);
     padding-block: var(--space-12);
 }
 
-/* Makale Başlığı Alanı */
+
+/* =============================================================================
+ * 2. BREADCRUMB (SAYFA YOLU)
+ * =============================================================================
+ * "Ana Sayfa › Yayınlar › Makale Adı" şeklinde navigasyon yolu.
+ * Ziyaretçinin sitede nerede olduğunu gösterir.
+ */
+
 .article-header { margin-bottom: var(--space-8); }
 
 .article-breadcrumb {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #888;
+    font-family: var(--font-ui); font-size: var(--text-xs); color: #888;
     margin-bottom: var(--space-4);
-    display: flex;
-    gap: var(--space-2);
-    align-items: center;
-    flex-wrap: wrap;
+    display: flex; gap: var(--space-2); align-items: center; flex-wrap: wrap;
 }
 .article-breadcrumb a { color: inherit; text-decoration: none; }
 .article-breadcrumb a:hover { color: var(--color-primary); }
-.article-breadcrumb svg { width: 12px; height: 12px; }
+.article-breadcrumb svg { width: 12px; height: 12px; } /* Ok ikonu ayırıcı */
 
+
+/* =============================================================================
+ * 3. MAKALE BAŞLIĞI ve ETİKETLER
+ * =============================================================================
+ */
+
+/* Konu etiketleri satırı ([Eğitim] [Makale] gibi) */
 .article-tags { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-bottom: var(--space-6); }
 
+/* Büyük makale başlığı */
 .article-title {
-    font-family: var(--font-heading);
-    font-size: 2.4rem;
-    color: var(--color-primary);
-    line-height: 1.2;
-    margin-bottom: var(--space-6);
+    font-family: var(--font-heading); font-size: 2.4rem;
+    color: var(--color-primary); line-height: 1.2; margin-bottom: var(--space-6);
 }
+
+
+/* =============================================================================
+ * 4. MAKALE META BİLGİSİ (YAZAR + TARİH + OKUMA SÜRESİ)
+ * =============================================================================
+ * Başlığın hemen altında yazar fotoğrafı, adı, tarihi ve okuma süresi.
+ */
 
 .article-meta {
-    display: flex;
-    align-items: center;
-    gap: var(--space-6);
+    display: flex; align-items: center; gap: var(--space-6);
     padding-block: var(--space-6);
-    border-block: 1px solid var(--color-border);
+    border-block: 1px solid var(--color-border); /* Üst ve altta ince çizgi */
     flex-wrap: wrap;
 }
-.article-meta__author {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    text-decoration: none;
-    color: var(--color-neutral-dark);
-}
-.article-meta__author img {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--color-border);
-}
+/* Yazar: fotoğraf + isim + kurum (tıklanabilir link) */
+.article-meta__author { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; color: var(--color-neutral-dark); }
+/* Yuvarlak yazar fotoğrafı */
+.article-meta__author img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-border); }
 .article-meta__author-info {}
-.article-meta__author-name {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-primary);
-    display: block;
-}
-.article-meta__author-title {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #777;
-    display: block;
-}
-.article-meta__info {
-    display: flex;
-    gap: var(--space-6);
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #777;
-}
-.article-meta__info span { display: flex; align-items: center; gap: var(--space-1); }
-.article-meta__info svg { width: 14px; height: 14px; }
+.article-meta__author-name { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 600; color: var(--color-primary); display: block; }
+.article-meta__author-title { font-family: var(--font-ui); font-size: var(--text-xs); color: #777; display: block; }
 
-/* Öne Çıkan Görsel */
+/* Tarih ve okuma süresi */
+.article-meta__info { display: flex; gap: var(--space-6); font-family: var(--font-ui); font-size: var(--text-xs); color: #777; }
+.article-meta__info span { display: flex; align-items: center; gap: var(--space-1); } /* İkon + metin */
+.article-meta__info svg  { width: 14px; height: 14px; }
+
+
+/* =============================================================================
+ * 5. ÖNE ÇIKAN GÖRSEL (KAPAK FOTOĞRAFI)
+ * =============================================================================
+ * Makale içeriğinin üstündeki büyük görsel. 16:9 oran, yuvarlak köşe.
+ */
+
 .article-featured-image {
-    border-radius: var(--radius-md);
-    overflow: hidden;
-    margin-bottom: var(--space-8);
-    aspect-ratio: 16/9;
+    border-radius: var(--radius-md); overflow: hidden;
+    margin-bottom: var(--space-8); aspect-ratio: 16/9;
 }
 .article-featured-image img { width: 100%; height: 100%; object-fit: cover; }
+/* Görsel altındaki açıklama yazısı */
 .article-featured-image figcaption {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #888;
-    padding: var(--space-2) 0;
-    font-style: italic;
+    font-family: var(--font-ui); font-size: var(--text-xs); color: #888;
+    padding: var(--space-2) 0; font-style: italic;
 }
 
-/* Makale İçeriği */
+
+/* =============================================================================
+ * 6. MAKALe İÇERİĞİ
+ * =============================================================================
+ * WordPress editöründen gelen yazının HTML içeriği için stiller.
+ * h2, h3, blockquote, liste, tablo, resim, link gibi tüm elementleri kapsar.
+ */
+
 .article-content {
-    font-size: var(--text-base);
-    line-height: var(--leading-relaxed);
+    font-size: var(--text-base);           /* 18px */
+    line-height: var(--leading-relaxed);   /* 1.75 → uzun okuma konforu */
     color: var(--color-neutral-dark);
-    text-align: justify;
-    hyphens: auto;
-    -webkit-hyphens: auto;
+    text-align: justify;                   /* İki yana yaslı (gazete gibi) */
+    hyphens: auto;                         /* Uzun kelimeleri satır sonunda böl */
+    -webkit-hyphens: auto;                 /* Safari için */
 }
+
+/* H2: Büyük ara başlık, üstünde ince çizgi (bölüm ayırıcı) */
 .article-content h2 {
-    font-size: var(--text-2xl);
-    margin-top: var(--space-12);
-    margin-bottom: var(--space-6);
-    padding-top: var(--space-6);
-    border-top: 2px solid var(--color-border);
+    font-size: var(--text-2xl); margin-top: var(--space-12); margin-bottom: var(--space-6);
+    padding-top: var(--space-6); border-top: 2px solid var(--color-border);
 }
-.article-content h3 {
-    font-size: var(--text-xl);
-    margin-top: var(--space-8);
-    margin-bottom: var(--space-4);
-}
-.article-content h4 {
-    font-size: var(--text-lg);
-    margin-top: var(--space-6);
-    margin-bottom: var(--space-3);
-}
+/* H3: Orta ara başlık */
+.article-content h3 { font-size: var(--text-xl); margin-top: var(--space-8); margin-bottom: var(--space-4); }
+/* H4: Küçük başlık */
+.article-content h4 { font-size: var(--text-lg); margin-top: var(--space-6); margin-bottom: var(--space-3); }
+
+/* Paragraflar arası boşluk */
 .article-content p { margin-bottom: var(--space-6); }
+
+/* Alıntı kutusu (blockquote): sol altın çizgi, açık mavi arka plan */
 .article-content blockquote {
     border-left: 4px solid var(--color-secondary);
     background: var(--color-accent);
     padding: var(--space-6) var(--space-8);
     margin-block: var(--space-8);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    font-style: italic;
-    font-size: var(--text-lg);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0; /* Sağ köşeler yuvarlak */
+    font-style: italic; font-size: var(--text-lg);
     color: var(--color-primary);
 }
+/* Alıntı kaynağı */
 .article-content blockquote cite {
-    display: block;
-    font-size: var(--text-sm);
-    font-style: normal;
-    color: #777;
-    margin-top: var(--space-3);
-    font-family: var(--font-ui);
+    display: block; font-size: var(--text-sm); font-style: normal; color: #777;
+    margin-top: var(--space-3); font-family: var(--font-ui);
 }
-.article-content ul, .article-content ol {
-    margin-bottom: var(--space-6);
-    padding-left: var(--space-8);
-}
+
+/* Maddeli ve sıralı listeler */
+.article-content ul, .article-content ol { margin-bottom: var(--space-6); padding-left: var(--space-8); }
 .article-content li { margin-bottom: var(--space-3); }
+
+/* İçerik içindeki linkler: altın rengi, kalın */
 .article-content a { color: var(--color-secondary); font-weight: 500; }
 .article-content a:hover { color: var(--color-primary); }
-.article-content img {
-    border-radius: var(--radius-md);
-    margin-block: var(--space-8);
-    max-width: 100%;
-}
-.article-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-block: var(--space-8);
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-}
-.article-content th {
-    background: var(--color-primary);
-    color: var(--color-white);
-    padding: var(--space-3) var(--space-4);
-    text-align: left;
-    font-weight: 600;
-}
-.article-content td {
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-}
+
+/* İçerik içindeki görseller */
+.article-content img { border-radius: var(--radius-md); margin-block: var(--space-8); max-width: 100%; }
+
+/* Tablo: tam genişlik, şeritli satırlar */
+.article-content table { width: 100%; border-collapse: collapse; margin-block: var(--space-8); font-family: var(--font-ui); font-size: var(--text-sm); }
+/* Tablo başlık satırı: lacivert arka plan, beyaz metin */
+.article-content th { background: var(--color-primary); color: var(--color-white); padding: var(--space-3) var(--space-4); text-align: left; font-weight: 600; }
+/* Tablo veri hücreleri */
+.article-content td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); }
+/* Çift satırlar: hafif mavi arka plan (zebra deseni, okunabilirlik) */
 .article-content tr:nth-child(even) td { background: var(--color-accent); }
 
-/* PDF İndirme */
+
+/* =============================================================================
+ * 7. PDF İNDİRME KUTUSU
+ * =============================================================================
+ * Makale içinde "Bu yayını PDF olarak indirin" kutusu.
+ * Solda ikon, ortada başlık/açıklama, sağda indirme butonu.
+ */
+
 .article-download {
-    background: var(--color-accent);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-6);
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
-    margin-block: var(--space-8);
+    background: var(--color-accent); border: 1px solid var(--color-border);
+    border-radius: var(--radius-md); padding: var(--space-6);
+    display: flex; align-items: center; gap: var(--space-4); margin-block: var(--space-8);
 }
+/* İkon kutusu: lacivert kare */
 .article-download__icon {
-    width: 48px;
-    height: 48px;
-    background: var(--color-primary);
+    width: 48px; height: 48px; background: var(--color-primary);
     border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .article-download__icon svg { width: 24px; height: 24px; color: white; }
 .article-download__info { flex: 1; }
-.article-download__title {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-primary);
-}
-.article-download__size {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #888;
-}
+.article-download__title { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 600; color: var(--color-primary); }
+.article-download__size  { font-family: var(--font-ui); font-size: var(--text-xs); color: #888; }
 
-/* Dipnotlar */
-.article-footnotes {
-    margin-top: var(--space-12);
-    padding-top: var(--space-8);
-    border-top: 2px solid var(--color-border);
-}
+
+/* =============================================================================
+ * 8. DİPNOTLAR
+ * =============================================================================
+ * Makalenin altındaki akademik kaynak listesi.
+ * Küçük, gri metin; üstte ince çizgi ile ayrılır.
+ */
+
+.article-footnotes { margin-top: var(--space-12); padding-top: var(--space-8); border-top: 2px solid var(--color-border); }
+/* "KAYNAKÇA" veya "DİPNOTLAR" başlığı */
 .article-footnotes__title {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    color: #777;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: var(--space-4);
+    font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 700;
+    color: #777; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: var(--space-4);
 }
 .article-footnotes ol { padding-left: var(--space-6); }
-.article-footnotes li {
-    font-size: 0.875rem;
-    color: #777;
-    line-height: var(--leading-normal);
-    margin-bottom: var(--space-2);
-}
+.article-footnotes li { font-size: 0.875rem; color: #777; line-height: var(--leading-normal); margin-bottom: var(--space-2); }
 
-/* Paylaşım */
+
+/* =============================================================================
+ * 9. SOSYAL MEDYA PAYLAŞIM BUTONLARI
+ * =============================================================================
+ * Makale sonundaki "Paylaş:" bölümü.
+ * Twitter/X, LinkedIn, WhatsApp butonları.
+ */
+
 .article-share {
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
+    display: flex; align-items: center; gap: var(--space-4);
     padding-block: var(--space-8);
-    border-block: 1px solid var(--color-border);
-    margin-block: var(--space-8);
-    flex-wrap: wrap;
+    border-block: 1px solid var(--color-border); /* Üst-alt ince çizgi */
+    margin-block: var(--space-8); flex-wrap: wrap;
 }
-.article-share__label {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-neutral-dark);
-}
+.article-share__label { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: 600; color: var(--color-neutral-dark); }
 .article-share__links { display: flex; gap: var(--space-3); }
+/* Her paylaşım butonu: çerçeveli, platform adıyla */
 .article-share__link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
+    display: flex; align-items: center; gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-sm);
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    text-decoration: none;
-    transition: all var(--transition);
-    border: 1px solid var(--color-border);
-    color: var(--color-neutral-dark);
+    font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 600;
+    text-decoration: none; transition: all var(--transition);
+    border: 1px solid var(--color-border); color: var(--color-neutral-dark);
 }
+/* Hover: lacivert dolgu */
 .article-share__link:hover { background: var(--color-primary); color: white; border-color: var(--color-primary); }
 .article-share__link svg { width: 16px; height: 16px; }
 
-/* İlgili Yayınlar */
-.related-posts { margin-top: var(--space-12); }
-.related-posts__title {
-    font-family: var(--font-heading);
-    font-size: var(--text-2xl);
-    color: var(--color-primary);
-    margin-bottom: var(--space-8);
-}
 
-/* Sidebar */
+/* =============================================================================
+ * 10. İLGİLİ YAYINLAR
+ * =============================================================================
+ * Makalenin sonunda, aynı konudaki diğer yayınların 3'lü kart listesi.
+ */
+
+.related-posts { margin-top: var(--space-12); }
+.related-posts__title { font-family: var(--font-heading); font-size: var(--text-2xl); color: var(--color-primary); margin-bottom: var(--space-8); }
+
+
+/* =============================================================================
+ * 11. SIDEBAR (YAN PANEL)
+ * =============================================================================
+ * Sayfanın sağındaki sabit panel.
+ * position: sticky → sayfa kaydırılsa bile ekranda görünür kalır.
+ */
+
 .article-sidebar { position: sticky; top: 80px; }
 
+/* Her sidebar widgetı beyaz kart içine alınır */
 .sidebar-widget {
-    background: var(--color-white);
-    border-radius: var(--radius-md);
-    padding: var(--space-6);
-    margin-bottom: var(--space-6);
-    box-shadow: var(--shadow-sm);
+    background: var(--color-white); border-radius: var(--radius-md);
+    padding: var(--space-6); margin-bottom: var(--space-6); box-shadow: var(--shadow-sm);
 }
+/* Widget başlığı: küçük harfler, altın rengi */
 .sidebar-widget__title {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-secondary);
-    margin-bottom: var(--space-5);
-    padding-bottom: var(--space-4);
-    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--color-secondary); margin-bottom: var(--space-5);
+    padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-border);
 }
 
-/* Yazar Widget */
+
+/* =============================================================================
+ * 12. YAZAR WİDGETI (SIDEBAR)
+ * =============================================================================
+ * Sağ paneldeki yazar bilgi kutusu: büyük profil fotoğrafı, isim, biyografi.
+ */
+
 .author-widget { text-align: center; }
-.author-widget__img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto var(--space-4);
-    border: 3px solid var(--color-accent);
-}
-.author-widget__name {
-    font-family: var(--font-heading);
-    font-size: var(--text-lg);
-    color: var(--color-primary);
-    margin-bottom: var(--space-2);
-}
-.author-widget__role {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: var(--color-secondary);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-4);
-}
-.author-widget__bio {
-    font-size: 0.875rem;
-    color: #666;
-    line-height: var(--leading-normal);
-    margin-bottom: var(--space-4);
-}
+/* Büyük yuvarlak profil fotoğrafı */
+.author-widget__img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin: 0 auto var(--space-4); border: 3px solid var(--color-accent); }
+.author-widget__name { font-family: var(--font-heading); font-size: var(--text-lg); color: var(--color-primary); margin-bottom: var(--space-2); }
+/* Yazar unvanı: küçük, altın rengi */
+.author-widget__role { font-family: var(--font-ui); font-size: var(--text-xs); color: var(--color-secondary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: var(--space-4); }
+.author-widget__bio  { font-size: 0.875rem; color: #666; line-height: var(--leading-normal); margin-bottom: var(--space-4); }
 
-/* İçindekiler */
-.toc-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-}
+
+/* =============================================================================
+ * 13. İÇİNDEKİLER LİSTESİ (TOC)
+ * =============================================================================
+ * Makale içindeki H2 ve H3 başlıklarından oluşan navigasyon.
+ * JavaScript okuyucu hangi bölümdeyse o bağlantıya 'active' ekler.
+ */
+
+.toc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-2); }
+/* Her içindekiler linki */
 .toc-list a {
-    font-family: var(--font-ui);
-    font-size: var(--text-sm);
-    color: #666;
+    font-family: var(--font-ui); font-size: var(--text-sm); color: #666;
     text-decoration: none;
     padding: var(--space-2) var(--space-3);
     border-radius: var(--radius-sm);
     display: block;
-    border-left: 2px solid transparent;
+    border-left: 2px solid transparent; /* Sol çizgi: aktifken renk alır */
     transition: all var(--transition);
     line-height: 1.4;
 }
+/* Hover ya da aktif (okuyucu o bölümdeyken) */
 .toc-list a:hover, .toc-list a.active {
     background: var(--color-accent);
     color: var(--color-primary);
-    border-left-color: var(--color-secondary);
+    border-left-color: var(--color-secondary); /* Sol altın çizgi belirir */
 }
 
+
+/* =============================================================================
+ * 14. RESPONSIVE (Tablet ve Mobil)
+ * =============================================================================
+ */
+
 @media (max-width: 1024px) {
-    .single-layout { grid-template-columns: 1fr; }
-    .article-sidebar { position: static; }
-    .article-title { font-size: var(--text-2xl); }
+    .single-layout { grid-template-columns: 1fr; } /* Tek sütun */
+    .article-sidebar { position: static; }         /* Artık yapışık değil */
+    .article-title { font-size: var(--text-2xl); } /* Başlık küçülsün */
 }

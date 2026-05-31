@@ -1,21 +1,64 @@
-/* Reset & Base */
+/*
+ * =============================================================================
+ * DOSYA: assets/css/base.css
+ * =============================================================================
+ * Bu dosya sitenin "temel sıfırlama ve iskelet" CSS'idir.
+ * Tıpkı bir binanın temeli gibi: üstüne ne inşa edilirse edilsin,
+ * bu katman hep altta durur ve her şeyin düzgün oturmasını sağlar.
+ *
+ * İçindekiler:
+ *   1. Reset       → Tarayıcı varsayılan stillerini temizle
+ *   2. Tipografi   → Başlıklar, paragraflar, linkler
+ *   3. Container   → İçeriği ortaya hizala ve genişliği sınırla
+ *   4. Section     → Bölüm boşlukları
+ *   5. Butonlar    → Birincil, ikincil, vurgu rengi butonlar
+ *   6. Etiketler   → Konu/tür etiketleri (tag)
+ *   7. Kart Grid   → 3 sütunlu haber kartı ızgarası
+ *   8. Kart        → Tek bir haber kartının stili
+ *   9. Yardımcılar → Divider, sr-only (erişilebilirlik)
+ * =============================================================================
+ */
+
+
+/* =============================================================================
+ * 1. RESET – TARAYICI VARSAYILANLARINI TEMİZLE
+ * =============================================================================
+ * Her tarayıcı (Chrome, Firefox, Safari) biraz farklı varsayılan stiller uygular.
+ * Bu satırlar hepsini sıfırlar → farklı tarayıcılarda aynı görünümü sağlar.
+ * Tıpkı boyamadan önce duvardaki eski boyanın sökülmesi gibi.
+ */
+
+/* Tüm elementlerin boyutlandırmasını düzelt: padding ve border genişliğe dahil olsun */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 16px; scroll-behavior: smooth; }
-
-body {
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-    color: var(--color-neutral-dark);
-    background-color: var(--color-neutral-light);
-    line-height: var(--leading-relaxed);
-    -webkit-font-smoothing: antialiased;
+html {
+    font-size: 16px;       /* Temel yazı boyutu → 1rem = 16px */
+    scroll-behavior: smooth; /* Sayfa içi linklerde yumuşak kaydırma (JS desteği için fallback) */
 }
 
-/* Skip Navigation – Erişilebilirlik */
+body {
+    font-family: var(--font-body);         /* Sistem font ailesi */
+    font-size: var(--text-base);           /* 18px */
+    color: var(--color-neutral-dark);      /* Koyu gri metin */
+    background-color: var(--color-neutral-light); /* Kırık beyaz arka plan */
+    line-height: var(--leading-relaxed);   /* 1.75 satır aralığı */
+    -webkit-font-smoothing: antialiased;   /* macOS'ta yazıları daha pürüzsüz göster */
+}
+
+
+/* =============================================================================
+ * 2. ERİŞİLEBİLİRLİK – SKIP NAVİGASYON
+ * =============================================================================
+ * Klavyeyle gezinen kullanıcılar (görme engelliler, motor engelliler) için
+ * Tab tuşuna basınca "İçeriğe geç" linki belirir.
+ * Bu sayede menüdeki her linki tek tek geçmek zorunda kalmazlar.
+ *
+ * Normalde görünmez (ekranın çok üstünde), odaklanınca beliriyor.
+ */
+
 .skip-nav {
     position: absolute;
-    top: -100%;
+    top: -100%;                     /* Ekranın çok üstünde → görünmez */
     left: var(--space-4);
     background: var(--color-primary);
     color: var(--color-white);
@@ -27,88 +70,142 @@ body {
     transition: top var(--transition);
     text-decoration: none;
 }
+/* Tab ile bu linke odaklanınca ekrana gir */
 .skip-nav:focus { top: var(--space-4); }
 
-/* Tipografi */
+
+/* =============================================================================
+ * 3. TİPOGRAFİ – BAŞLIKLAR, PARAGRAFLAR, LİNKLER
+ * =============================================================================
+ * Sitenin tüm metin stillerinin temel kuralları burada belirlenir.
+ */
+
+/* Tüm başlıklar (H1'den H6'ya) */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
-    color: var(--color-primary);
-    line-height: var(--leading-tight);
-    font-weight: 700;
+    color: var(--color-primary);      /* Lacivert */
+    line-height: var(--leading-tight); /* Başlıklar sıkışık satır aralığı */
+    font-weight: 700;                  /* Kalın */
 }
-h1 { font-size: var(--text-3xl); }
-h2 { font-size: var(--text-2xl); }
-h3 { font-size: var(--text-xl); }
-h4 { font-size: var(--text-lg); }
-h5, h6 { font-size: var(--text-base); }
+h1 { font-size: var(--text-3xl); }  /* 45px */
+h2 { font-size: var(--text-2xl); }  /* 32px */
+h3 { font-size: var(--text-xl); }   /* 24px */
+h4 { font-size: var(--text-lg); }   /* 20px */
+h5, h6 { font-size: var(--text-base); } /* 18px */
 
-p { margin-bottom: var(--space-4); }
+p { margin-bottom: var(--space-4); } /* Paragraflar arasında boşluk */
 
+/* Tüm linkler */
 a {
     color: var(--color-primary);
     text-decoration: underline;
-    text-underline-offset: 3px;
+    text-underline-offset: 3px;    /* Alt çizgi metnin hemen altında değil, biraz aşağıda */
     transition: color var(--transition);
 }
-a:hover { color: var(--color-secondary); }
+a:hover { color: var(--color-secondary); } /* Üzerine gelince altın rengi */
+
+/* Klavye ile linklere odaklanılınca görünür çerçeve çiz (erişilebilirlik) */
 a:focus-visible {
     outline: 3px solid var(--color-secondary);
     outline-offset: 2px;
     border-radius: var(--radius-sm);
 }
 
+/* Görseller hiçbir zaman kapsayıcısından taşmasın */
 img {
     max-width: 100%;
     height: auto;
-    display: block;
+    display: block; /* Alt boşlukları ortadan kaldırır */
 }
 
+/* Liste öğelerinin varsayılan girintisi */
 ul, ol { padding-left: var(--space-6); }
 li { margin-bottom: var(--space-2); }
 
-/* Container */
-.container {
-    width: 100%;
-    max-width: var(--container-xl);
-    margin-inline: auto;
-    padding-inline: var(--space-6);
-}
-
+/* Mobilde yazı boyutu küçülsün, başlıklar ölçeklensin */
 @media (max-width: 768px) {
     .container { padding-inline: var(--space-4); }
     h1 { font-size: 2rem; }
     h2 { font-size: 1.6rem; }
-    body { font-size: 1rem; }
+    body { font-size: 1rem; } /* Mobilde 16px (okunabilirlik minimum sınırı) */
 }
 
-/* Section Spacing */
-.section { padding-block: var(--space-16); }
-.section--sm { padding-block: var(--space-12); }
-.section--lg { padding-block: var(--space-24); }
 
-/* Section Başlık */
+/* =============================================================================
+ * 4. CONTAINER – İÇERİĞİ ORTALA
+ * =============================================================================
+ * Tüm sayfa içerikleri bu kutu içine alınır.
+ * İçerik maksimum 1280px genişliğinde olur ve sayfanın ortasında durur.
+ * Tıpkı bir kitabın sayfa kenar boşlukları gibi.
+ */
+
+.container {
+    width: 100%;
+    max-width: var(--container-xl); /* 1280px maksimum */
+    margin-inline: auto;            /* Sola ve sağa otomatik boşluk → ortala */
+    padding-inline: var(--space-6); /* Sol-sağ iç boşluk (ekrandan taşmasın) */
+}
+
+
+/* =============================================================================
+ * 5. BÖLÜM BOŞLUKLARI
+ * =============================================================================
+ * Ana sayfa ve diğer sayfalardaki her bölüm (.section) aynı iç boşluğa sahip olur.
+ * Üst ve alt boşluk eşit → bölümler düzgün sıralanır.
+ */
+
+.section    { padding-block: var(--space-16); } /* Normal bölüm: üst-alt 64px */
+.section--sm { padding-block: var(--space-12); } /* Küçük bölüm: üst-alt 48px */
+.section--lg { padding-block: var(--space-24); } /* Büyük bölüm: üst-alt 96px */
+
+
+/* =============================================================================
+ * 6. BÖLÜM BAŞLIĞI (SECTION HEADER)
+ * =============================================================================
+ * Her bölümün üst kısmındaki "ÜST ETİKET / Büyük Başlık / Açıklama" düzeni.
+ *
+ * Örnek:
+ *   ARAŞTIRMA ALANLARI          ← section-header__label (altın rengi, büyük harf)
+ *   Konulara Göre İçerikler     ← section-header__title (büyük lacivert başlık)
+ *   Bizi takip etmek için...    ← section-header__desc  (gri açıklama metni)
+ */
+
 .section-header { margin-bottom: var(--space-12); }
+
 .section-header__label {
     font-family: var(--font-ui);
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--color-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    color: var(--color-secondary);  /* Altın rengi üst etiket */
+    text-transform: uppercase;      /* BÜYÜK HARF */
+    letter-spacing: 0.1em;          /* Harfler arası boşluk (okunabilirlik) */
     display: block;
     margin-bottom: var(--space-3);
 }
+
 .section-header__title { color: var(--color-primary); }
+
 .section-header__desc {
     font-size: var(--text-lg);
     color: #555;
     margin-top: var(--space-4);
-    max-width: 60ch;
+    max-width: 60ch; /* 60 karakter genişliği → çok uzun satırlar zor okunur */
 }
 
-/* Butonlar */
+
+/* =============================================================================
+ * 7. BUTONLAR
+ * =============================================================================
+ * Üç tür buton vardır, her biri farklı önem seviyesi için kullanılır:
+ *
+ *   btn--primary  → En önemli aksiyon (koyu lacivert dolu)
+ *   btn--secondary → İkincil aksiyon (çerçeveli, şeffaf)
+ *   btn--accent    → Vurgu aksiyonu (altın rengi)
+ */
+
+/* Tüm butonların ortak stili */
 .btn {
-    display: inline-flex;
+    display: inline-flex;    /* İkon ve metin yan yana düzgün durur */
     align-items: center;
     gap: var(--space-2);
     font-family: var(--font-ui);
@@ -122,22 +219,25 @@ li { margin-bottom: var(--space-2); }
     transition: all var(--transition);
     line-height: 1;
 }
+/* Klavye ile butona odaklanılınca görünür çerçeve (erişilebilirlik) */
 .btn:focus-visible {
     outline: 3px solid var(--color-secondary);
     outline-offset: 2px;
 }
 
+/* BİRİNCİL buton: koyu lacivert dolu arka plan → en önemli aksiyon */
 .btn--primary {
     background: var(--color-primary);
     color: var(--color-white);
     border-color: var(--color-primary);
 }
 .btn--primary:hover {
-    background: #0f2540;
+    background: #0f2540;    /* Daha koyu lacivert */
     border-color: #0f2540;
     color: var(--color-white);
 }
 
+/* İKİNCİL buton: sadece çerçeveli → daha az önemli aksiyon */
 .btn--secondary {
     background: transparent;
     color: var(--color-primary);
@@ -148,61 +248,100 @@ li { margin-bottom: var(--space-2); }
     color: var(--color-white);
 }
 
+/* VURGU butonu: altın rengi dolu → dikkat çeken özel aksiyon */
 .btn--accent {
     background: var(--color-secondary);
     color: var(--color-white);
     border-color: var(--color-secondary);
 }
 .btn--accent:hover {
-    background: #a87a2a;
+    background: #a87a2a;    /* Daha koyu altın */
     border-color: #a87a2a;
     color: var(--color-white);
 }
 
-/* Etiketler */
+
+/* =============================================================================
+ * 8. ETİKETLER (TAG)
+ * =============================================================================
+ * Yazılara atanan konu/tür etiketleri. Örnek:
+ *   [Eğitim]  [Makale]  [Türkçe]
+ *
+ * Yuvarlak köşeli, küçük metin, açık mavi arka plan.
+ */
+
 .tag {
     display: inline-block;
     font-family: var(--font-ui);
-    font-size: var(--text-xs);
+    font-size: var(--text-xs);       /* Küçük metin */
     font-weight: 600;
     padding: var(--space-1) var(--space-3);
-    border-radius: 999px;
+    border-radius: 999px;            /* Tam yuvarlak (hap şeklinde) */
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    background: var(--color-accent);
+    background: var(--color-accent); /* Açık mavi-gri arka plan */
     color: var(--color-primary);
     transition: background var(--transition);
 }
+/* Üzerine gelince lacivert arka plan, beyaz metin */
 .tag:hover { background: var(--color-primary); color: var(--color-white); }
 
-/* Kart Grid */
+
+/* =============================================================================
+ * 9. KART IZGARASI (CARD GRID)
+ * =============================================================================
+ * Haber/yayın kartlarını 3 sütuna dizer.
+ * Küçük ekranlarda otomatik 2 sütuna, çok küçüklerde tek sütuna geçer.
+ */
+
 .card-grid {
     display: grid;
     gap: var(--space-6);
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* 3 eşit sütun */
 }
+/* Tablet: 2 sütun */
 @media (max-width: 1024px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+/* Mobil: 1 sütun */
 @media (max-width: 640px)  { .card-grid { grid-template-columns: 1fr; } }
 
-/* Kart */
+
+/* =============================================================================
+ * 10. KART (CARD)
+ * =============================================================================
+ * Her yazı/yayın kartının görünümü. Üst kısım görsel, alt kısım metin bilgisi.
+ * Üzerine gelince hafifçe yukarı kalkar ve gölge derinleşir (hover efekti).
+ */
+
 .card {
     background: var(--color-white);
     border-radius: var(--radius-md);
-    overflow: hidden;
+    overflow: hidden;               /* Görsel köşe yuvarlama için gerekmez içeriye taşmasın */
     box-shadow: var(--shadow-sm);
     transition: box-shadow var(--transition), transform var(--transition);
     display: flex;
-    flex-direction: column;
+    flex-direction: column;         /* Görsel üstte, içerik altta */
 }
+/* Hover: hafif yukarı kalk ve gölge derinleş */
 .card:hover {
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
+
+/* Kart görseli: 16:9 oran, taşma gizle */
 .card__image { aspect-ratio: 16/9; overflow: hidden; }
-.card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
+.card__image img {
+    width: 100%; height: 100%;
+    object-fit: cover;              /* Görseli kesmeden kutuya sığdır */
+    transition: transform 400ms ease;
+}
+/* Hover: görsel hafifçe büyüsün (zoom efekti) */
 .card:hover .card__image img { transform: scale(1.03); }
+
+/* Kart içerik alanı */
 .card__body { padding: var(--space-6); flex: 1; display: flex; flex-direction: column; }
+
+/* Meta bilgiler: tür etiketi + tarih */
 .card__meta {
     display: flex;
     align-items: center;
@@ -210,11 +349,10 @@ li { margin-bottom: var(--space-2); }
     margin-bottom: var(--space-3);
     flex-wrap: wrap;
 }
-.card__date {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #777;
-}
+/* Tarih metni: küçük, gri */
+.card__date { font-family: var(--font-ui); font-size: var(--text-xs); color: #777; }
+
+/* Başlık */
 .card__title {
     font-family: var(--font-heading);
     font-size: var(--text-lg);
@@ -224,58 +362,61 @@ li { margin-bottom: var(--space-2); }
 }
 .card__title a { text-decoration: none; color: inherit; }
 .card__title a:hover { color: var(--color-secondary); }
-.card__excerpt {
-    font-size: 0.95rem;
-    color: #555;
-    line-height: var(--leading-normal);
-    flex: 1;
-    margin-bottom: var(--space-4);
-}
+
+/* Özet metni */
+.card__excerpt { font-size: 0.95rem; color: #555; line-height: var(--leading-normal); flex: 1; margin-bottom: var(--space-4); }
+
+/* Kart alt kısmı: yazar + "Oku →" linki */
 .card__footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding-top: var(--space-4);
-    border-top: 1px solid var(--color-border);
-    margin-top: auto;
+    border-top: 1px solid var(--color-border); /* İnce ayırıcı çizgi */
+    margin-top: auto;                          /* İçerik kısa olsa bile alta yapış */
 }
+
+/* Yazar: avatar + isim */
 .card__author {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    color: #555;
-    text-decoration: none;
+    display: flex; align-items: center; gap: var(--space-2);
+    font-family: var(--font-ui); font-size: var(--text-xs); color: #555; text-decoration: none;
 }
-.card__author img {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    object-fit: cover;
-}
+.card__author img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+
+/* "Oku →" linki */
 .card__read-more {
-    font-family: var(--font-ui);
-    font-size: var(--text-xs);
-    font-weight: 600;
-    color: var(--color-secondary);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: var(--space-1);
+    font-family: var(--font-ui); font-size: var(--text-xs); font-weight: 600;
+    color: var(--color-secondary); text-decoration: none;
+    display: flex; align-items: center; gap: var(--space-1);
 }
 .card__read-more:hover { color: var(--color-primary); }
 
-/* Divider */
+
+/* =============================================================================
+ * 11. AYIRıcı ÇİZGİ (DIVIDER)
+ * =============================================================================
+ * Başlıkların altındaki altın rengi kısa dekoratif çizgi.
+ * <hr class="divider"> olarak kullanılır.
+ */
+
 .divider {
     width: 60px;
     height: 3px;
-    background: var(--color-secondary);
+    background: var(--color-secondary); /* Altın rengi */
     border: none;
     margin-block: var(--space-6);
 }
 
-/* Screen Reader Only */
+
+/* =============================================================================
+ * 12. EKRAN OKUYUCU İÇİN GİZLİ METİN (SR-ONLY)
+ * =============================================================================
+ * Görsel olarak ekranda görünmez, ama ekran okuyucular okur.
+ * Erişilebilirlik için önemli: ikonların açıklamaları, form etiketleri vb.
+ *
+ * Kullanım: <label class="sr-only">E-posta adresiniz</label>
+ */
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -283,7 +424,7 @@ li { margin-bottom: var(--space-2); }
     padding: 0;
     margin: -1px;
     overflow: hidden;
-    clip: rect(0,0,0,0);
+    clip: rect(0,0,0,0);    /* Görüntü alanını sıfırla */
     white-space: nowrap;
     border: 0;
 }
