@@ -281,3 +281,99 @@
 }
 .error-page__title { font-size: var(--text-2xl); margin-bottom: var(--space-4); }
 .error-page__desc  { color: #666; margin-bottom: var(--space-8); }
+
+
+/* =============================================================================
+ * ARAMA SONUÇLARI SAYFASI
+ * =============================================================================
+ * /?s=arama+terimi adresinde search.php tarafından kullanılır.
+ */
+
+/* Yeni arama formu – başlık alanının hemen altında, kart listesinden önce */
+.search-page__form {
+    padding-block: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-8);
+}
+
+/* WordPress'in varsayılan arama formunu temaya uyarla */
+.search-page__form .search-form {
+    display: flex;
+    gap: var(--space-3);
+    max-width: 600px;
+}
+
+.search-page__form .search-field {
+    flex: 1;
+    font-family: var(--font-ui);
+    font-size: var(--text-base);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color var(--transition);
+    color: var(--color-neutral-dark);
+    background: var(--color-white);
+}
+
+.search-page__form .search-field:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(26, 58, 92, 0.12);
+}
+
+.search-page__form .search-submit {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-3) var(--space-6);
+    background: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.search-page__form .search-submit:hover {
+    background: #122a45; /* primary biraz koyulaşır */
+}
+
+/* Sonuç bulunamadı kutusu */
+.search-page__no-results {
+    padding: var(--space-12) var(--space-8);
+    background: var(--color-accent);
+    border-radius: var(--radius-lg);
+    text-align: center;
+}
+
+.search-page__no-results > p:first-child {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    color: var(--color-neutral-dark);
+    margin-bottom: var(--space-4);
+}
+
+.search-page__no-results > p:last-of-type {
+    font-size: var(--text-base);
+    color: #666;
+    margin-bottom: var(--space-8);
+}
+
+/* Konu etiketleri satırı */
+.search-page__topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    justify-content: center;
+}
+
+/* Mobil uyum */
+@media (max-width: 640px) {
+    .search-page__form .search-form {
+        flex-direction: column;
+    }
+
+    .search-page__no-results {
+        padding: var(--space-8) var(--space-4);
+    }
+}

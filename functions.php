@@ -269,6 +269,11 @@ function utkvakfi_archive_query( WP_Query $query ): void {
         $query->set( 'posts_per_page', 9 );
     }
 
+    // Aramada tüm kamuya açık içerik tiplerini dahil et
+    if ( $query->is_search() ) {
+        $query->set( 'post_type', [ 'post', 'page', 'yayin', 'etkinlik', 'uzman', 'medya', 'proje' ] );
+    }
+
     // Yayınlar arşivinde hem 'yayin' hem de standart 'post' tiplerini getir
     // (Böylece normal blog yazıları da yayın listesinde görünür)
     if ( $query->is_post_type_archive( 'yayin' ) ) {
